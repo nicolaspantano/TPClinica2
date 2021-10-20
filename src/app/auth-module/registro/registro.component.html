@@ -1,0 +1,260 @@
+<div class="row text-center" *ngIf="tipoRegistro==''">
+    <h2>¿Que tipo de usuario desea registrar?</h2>
+    <div class="col-6" (click)="tipoRegistro='paciente'">
+        <p><img src="../../../assets/paciente.png" style="max-width:400px;"></p>
+        <h3>Paciente</h3>
+
+    </div>
+    <div class="col-6" (click)="tipoRegistro='especialista'">
+        <p><img src="../../../assets/especialista.png" style="max-width:400px;"></p>
+        <h3>Especialista</h3>
+
+    </div>
+</div>
+
+<!--REGISTRO DE PACIENTE-->
+<form [formGroup]="formPaciente" (ngSubmit)="enviarFormPaciente()" *ngIf="tipoRegistro=='paciente'">
+
+    <div class="row">
+
+
+        <!--nombre-->
+        <div class="mb-3 col-6">
+            <label for="inputNombre" class="form-label">Nombre</label>
+            <input type="text" class="form-control" id="inputNombre" aria-describedby="nombreHelp"
+                formControlName="nombre">
+            <div id="nombreHelp" style="color:red" class="form-text"
+                *ngIf="formPaciente.get('nombre')?.hasError('required') && formPaciente.get('nombre')?.touched">El
+                nombre es requerido</div>
+        </div>
+
+        <!--apellido-->
+        <div class="mb-3 col-6">
+            <label for="inputApellido" class="form-label">Apellido</label>
+            <input type="text" class="form-control" id="inputApellido" aria-describedby="apellidoHelp"
+                formControlName="apellido">
+            <div id="apellidoHelp" style="color:red" class="form-text"
+                *ngIf="formPaciente.get('apellido')?.hasError('required') && formPaciente.get('apellido')?.touched">El
+                apellido es requerido</div>
+        </div>
+
+    </div>
+
+    <div class="row">
+        <!--edad-->
+
+
+
+        <div class="mb-3 col-3">
+            <label for="inputEdad" class="form-label">Edad</label>
+            <input type="number" class="form-control" id="inputEdad" aria-describedby="edadHelp" formControlName="edad">
+            <div id="edadHelp" style="color:red" class="form-text"
+                *ngIf="formPaciente.get('edad')?.hasError('required') && formPaciente.get('edad')?.touched">La edad es
+                requerida</div>
+        </div>
+
+        <!--DNI-->
+
+        <div class="mb-3 col-6">
+            <label for="inputDni" class="form-label">DNI</label>
+            <input type="number" class="form-control" id="inputDni" aria-describedby="dniHelp" formControlName="dni">
+            <div id="dniHelp" style="color:red" class="form-text"
+                *ngIf="formPaciente.get('dni')?.hasError('required') && formPaciente.get('dni')?.touched">El DNI es
+                requerido</div>
+            <div id="dniHelp" style="color:red" class="form-text"
+                *ngIf="(formPaciente.get('dni')?.hasError('max')||formPaciente.get('dni')?.hasError('min')) && formPaciente.get('dni')?.touched">
+                DNI invalido</div>
+        </div>
+
+        <!--Obra social-->
+
+        <div class="mb-3 col-3">
+            <label for="inputObraSocial" class="form-label">Obra Social</label>
+            <input type="text" class="form-control" id="inputObraSocial" aria-describedby="obraSocialHelp"
+                formControlName="obraSocial">
+            <div id="obraSocialHelp" style="color:red" class="form-text"
+                *ngIf="formPaciente.get('obraSocial')?.hasError('required') && formPaciente.get('obraSocial')?.touched">
+                La
+                obra social es requerida</div>
+        </div>
+
+    </div>
+
+    <div class="row">
+
+
+        <!--Email-->
+
+        <div class="mb-3 col-6">
+            <label for="exampleInputEmail1" class="form-label">Email</label>
+            <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp"
+                formControlName="email">
+            <div id="emailHelp" style="color:red" class="form-text"
+                *ngIf="formPaciente.get('email')?.hasError('required') && formPaciente.get('email')?.touched">El email
+                es
+                requerido</div>
+            <div id="emailHelp" style="color:red" class="form-text"
+                *ngIf="formPaciente.get('email')?.hasError('faltaArroba') && formPaciente.get('email')?.touched">Email
+                invalido</div>
+        </div>
+
+        <!--Password-->
+
+        <div class="mb-3 col-6">
+            <label for="inputPassword" class="form-label">Contraseña</label>
+            <input type="password" class="form-control" id="inputPassword" aria-describedby="passwordHelp"
+                formControlName="password">
+            <div id="passwordHelp" style="color:red" class="form-text"
+                *ngIf="formPaciente.get('password')?.hasError('required') && formPaciente.get('password')?.touched">La
+                contraseña es requerida</div>
+        </div>
+
+    </div>
+
+    <div class="row">
+        <!--Imagen 1-->
+        <div class="mb-3 col-6">
+            <p><label for="inputImagen1" class="form-label">Imagen 1</label></p>
+            <input type="file"  accept=".jpg,.jpeg,.png" (change)="cambioFoto($event,1)" formControlName="imagen1" id="inputImagen1"
+                aria-describedby="imagen1Help">
+            <div id="imagen1Help" style="color:red" class="form-text"
+                *ngIf="formPaciente.get('imagen1')?.hasError('required') && formPaciente.get('imagen1')?.touched">La
+                imagen es requerida</div>
+            <div id="imagen1Help" style="color:red" class="form-text"
+                *ngIf="formPaciente.get('imagen1')?.hasError('formatoInvalido') && formPaciente.get('imagen1')?.touched">Formato de archivo incorrecto</div>
+        </div>
+        <!--Imagen 2-->
+        <div class="mb-3 col-6">
+            <p><label for="inputImagen2" class="form-label">Imagen 2</label></p>
+            <input type="file" accept=".jpg,.jpeg,.png" (change)="cambioFoto($event,2)" formControlName="imagen2" id="inputImagen2"
+                aria-describedby="imagen2Help">
+            <div id="imagen2Help" style="color:red" class="form-text"
+                *ngIf="formPaciente.get('imagen2')?.hasError('required') && formPaciente.get('imagen2')?.touched">La
+                imagen es requerida</div>
+            <div id="imagen2Help" style="color:red" class="form-text"
+                *ngIf="formPaciente.get('imagen2')?.hasError('formatoInvalido') && formPaciente.get('imagen2')?.touched">Formato de archivo incorrecto</div>
+        </div>
+    </div>
+    <button type="submit" class="btn btn-primary" [disabled]="formPaciente.invalid">Confirmar</button>
+
+
+</form>
+
+<!--REGISTRO DE ESPECIALISTA-->
+<form [formGroup]="formEspecialista" (ngSubmit)="enviarFormEspecialista()" *ngIf="tipoRegistro=='especialista'">
+
+    <div class="row">
+
+
+        <!--nombre-->
+        <div class="mb-3 col-6">
+            <label for="inputNombre" class="form-label">Nombre</label>
+            <input type="text" class="form-control" id="inputNombre" aria-describedby="nombreHelp"
+                formControlName="nombre">
+            <div id="nombreHelp" style="color:red" class="form-text"
+                *ngIf="formEspecialista.get('nombre')?.hasError('required') && formEspecialista.get('nombre')?.touched">El
+                nombre es requerido</div>
+        </div>
+
+        <!--apellido-->
+        <div class="mb-3 col-6">
+            <label for="inputApellido" class="form-label">Apellido</label>
+            <input type="text" class="form-control" id="inputApellido" aria-describedby="apellidoHelp"
+                formControlName="apellido">
+            <div id="apellidoHelp" style="color:red" class="form-text"
+                *ngIf="formEspecialista.get('apellido')?.hasError('required') && formEspecialista.get('apellido')?.touched">El
+                apellido es requerido</div>
+        </div>
+
+    </div>
+
+    <div class="row">
+        <!--edad-->
+
+
+
+        <div class="mb-3 col-3">
+            <label for="inputEdad" class="form-label">Edad</label>
+            <input type="number" class="form-control" id="inputEdad" aria-describedby="edadHelp" formControlName="edad">
+            <div id="edadHelp" style="color:red" class="form-text"
+                *ngIf="formEspecialista.get('edad')?.hasError('required') && formEspecialista.get('edad')?.touched">La edad es
+                requerida</div>
+        </div>
+
+        <!--DNI-->
+
+        <div class="mb-3 col-6">
+            <label for="inputDni" class="form-label">DNI</label>
+            <input type="number" class="form-control" id="inputDni" aria-describedby="dniHelp" formControlName="dni">
+            <div id="dniHelp" style="color:red" class="form-text"
+                *ngIf="formEspecialista.get('dni')?.hasError('required') && formEspecialista.get('dni')?.touched">El DNI es
+                requerido</div>
+            <div id="dniHelp" style="color:red" class="form-text"
+                *ngIf="(formEspecialista.get('dni')?.hasError('max')||formEspecialista.get('dni')?.hasError('min')) && formEspecialista.get('dni')?.touched">
+                DNI invalido</div>
+        </div>
+
+        <!--Especialidad-->
+
+        <div class="mb-3 col-3">
+            <label for="inputEspecialidad" class="form-label">Especialidad</label>
+            <input type="text" class="form-control" id="inputEspecialidad" aria-describedby="especialidadHelp"
+                formControlName="especialidad">
+            <div id="especialidadHelp" style="color:red" class="form-text"
+                *ngIf="formEspecialista.get('especialidad')?.hasError('required') && formEspecialista.get('especialidad')?.touched">
+                La
+                especialidad es requerida</div>
+        </div>
+
+    </div>
+
+    <div class="row">
+
+
+        <!--Email-->
+
+        <div class="mb-3 col-6">
+            <label for="exampleInputEmail1" class="form-label">Email</label>
+            <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp"
+                formControlName="email">
+            <div id="emailHelp" style="color:red" class="form-text"
+                *ngIf="formEspecialista.get('email')?.hasError('required') && formEspecialista.get('email')?.touched">El email
+                es
+                requerido</div>
+            <div id="emailHelp" style="color:red" class="form-text"
+                *ngIf="formEspecialista.get('email')?.hasError('faltaArroba') && formEspecialista.get('email')?.touched">Email
+                invalido</div>
+        </div>
+
+        <!--Password-->
+
+        <div class="mb-3 col-6">
+            <label for="inputPassword" class="form-label">Contraseña</label>
+            <input type="password" class="form-control" id="inputPassword" aria-describedby="passwordHelp"
+                formControlName="password">
+            <div id="passwordHelp" style="color:red" class="form-text"
+                *ngIf="formEspecialista.get('password')?.hasError('required') && formEspecialista.get('password')?.touched">La
+                contraseña es requerida</div>
+        </div>
+
+    </div>
+
+    <div class="row">
+        <!--Imagen 1-->
+        <div class="mb-3 col-6">
+            <p><label for="inputImagen1" class="form-label">Imagen 1</label></p>
+            <input type="file"  accept=".jpg,.jpeg,.png" (change)="cambioFoto($event,1)" formControlName="imagen1" id="inputImagen1"
+                aria-describedby="imagen1Help">
+            <div id="imagen1Help" style="color:red" class="form-text"
+                *ngIf="formEspecialista.get('imagen1')?.hasError('required') && formEspecialista.get('imagen1')?.touched">La
+                imagen es requerida</div>
+            <div id="imagen1Help" style="color:red" class="form-text"
+                *ngIf="formEspecialista.get('imagen1')?.hasError('formatoInvalido') && formEspecialista.get('imagen1')?.touched">Formato de archivo incorrecto</div>
+        </div>
+
+    </div>
+    <button type="submit" class="btn btn-primary" [disabled]="formEspecialista.invalid">Confirmar</button>
+
+
+</form>
+

@@ -1,0 +1,27 @@
+<form [formGroup]="form" (ngSubmit)="enviarForm()">
+    <div class="mb-3">
+        <label for="exampleInputEmail1" class="form-label">Email</label>
+        <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp"
+            formControlName="email">
+        <div id="emailHelp" style="color:red" class="form-text"
+            *ngIf="form.get('email')?.hasError('required') && form.get('email')?.touched">El email
+            es
+            requerido</div>
+        <div id="emailHelp" style="color:red" class="form-text"
+            *ngIf="form.get('email')?.hasError('faltaArroba') && form.get('email')?.touched">Email
+            invalido</div>
+    </div>
+
+    <!--Password-->
+
+    <div class="mb-3">
+        <label for="inputPassword" class="form-label">Contraseña</label>
+        <input type="password" class="form-control" id="inputPassword" aria-describedby="passwordHelp"
+            formControlName="password">
+        <div id="passwordHelp" style="color:red" class="form-text"
+            *ngIf="form.get('password')?.hasError('required') && form.get('password')?.touched">La
+            contraseña es requerida</div>
+    </div>
+
+    <button type="submit" class="btn btn-primary" [disabled]="form.invalid">Confirmar</button>
+</form>
