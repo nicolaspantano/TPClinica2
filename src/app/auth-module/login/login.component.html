@@ -23,5 +23,19 @@
             contraseña es requerida</div>
     </div>
 
-    <button type="submit" class="btn btn-primary" [disabled]="form.invalid">Confirmar</button>
+    <div class="row">
+        <div class="col-4">
+            <button type="submit" class="btn btn-primary" [disabled]="form.invalid">Confirmar</button>
+        </div>
+        <div class="col-8">
+            <select class="form-control" (change)="onChangeHardcode($event)">
+                <option style="display:none" selected>Hardcodear un usuario</option>
+                <option value="paciente">Paciente</option>
+                <option value="especialista">Especialista</option>
+                <option value="administrador">Administrador</option>
+
+            </select>
+        </div>
+    </div>
+    
 </form>

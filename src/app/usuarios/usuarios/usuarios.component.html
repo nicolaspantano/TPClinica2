@@ -1,0 +1,120 @@
+<div class="row">
+    <div class="col-6">
+        <h1>Usuarios</h1>
+
+    </div>
+    <div class="col-6 text-end">
+        <button class="btn btn-primary" routerLink="/registrarse" [queryParams]="{'admin':true}">Nuevo usuario</button>
+    </div>
+</div>
+<div class="container">
+    <div style="margin-bottom: 20px;">
+        <h4>Pacientes</h4>
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th scope="col">Imagen1</th>
+                    <th scope="col">Imagen2</th>
+                    <th scope="col">Nombre</th>
+                    <th scope="col">Apellido</th>
+                    <th scope="col">DNI</th>
+                    <th scope="col">Edad</th>
+                    <th scope="col">Correo</th>
+                    <th scope="col">Obra Social</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let paciente of pacientesPag">
+                    <td><img class="fotoTabla" [src]="paciente.imagen1"></td>
+                    <td><img class="fotoTabla" [src]="paciente.imagen2"></td>
+                    <td>{{paciente.nombre}}</td>
+                    <td>{{paciente.apellido}}</td>
+                    <td>{{paciente.dni}}</td>
+                    <td>{{paciente.edad}}</td>
+                    <td>{{paciente.correo}}</td>
+                    <td>{{paciente.obraSocial}}</td>
+                </tr>
+
+            </tbody>
+        </table>
+
+        <div *ngIf="pacientes" class="d-flex justify-content-between p-2">
+            <ngb-pagination [collectionSize]="pacientes.length" [(page)]="pagePacientes" [pageSize]="pageSize"
+                (pageChange)="refreshPacientes()">
+            </ngb-pagination>
+        </div>
+    </div>
+
+    <div style="margin-bottom: 20px;">
+        <h4>Especialistas</h4>
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th scope="col">Imagen</th>
+                    <th scope="col">Nombre</th>
+                    <th scope="col">Apellido</th>
+                    <th scope="col">DNI</th>
+                    <th scope="col">Edad</th>
+                    <th scope="col">Correo</th>
+                    <th scope="col">Especialidad</th>
+                    <th scope="col">Validar</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let especialista of especialistasPag">
+                    <td><img class="fotoTabla" [src]="especialista.imagen1"></td>
+                    <td>{{especialista.nombre}}</td>
+                    <td>{{especialista.apellido}}</td>
+                    <td>{{especialista.dni}}</td>
+                    <td>{{especialista.edad}}</td>
+                    <td>{{especialista.correo}}</td>
+                    <td>{{especialista.especialidad}}</td>
+                    <td *ngIf="especialista.verificadoAdmin" class="text-center"><img style="max-width: 30px;max-height: 30px;" src="../../../assets/check.png"></td>
+                    <td *ngIf="!especialista.verificadoAdmin"><button class="btn btn-primary" (click)="verificarEspecialista(especialista)">Verificar</button></td>
+
+                </tr>
+
+            </tbody>
+        </table>
+
+        <div *ngIf="especialistas" class="d-flex justify-content-between p-2">
+            <ngb-pagination [collectionSize]="especialistas.length" [(page)]="pageEspecialistas" [pageSize]="pageSize"
+                (pageChange)="refreshPacientes()">
+            </ngb-pagination>
+        </div>
+    </div>
+
+    <div style="margin-bottom: 20px;">
+        <h4>Administradores</h4>
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th scope="col">Imagen</th>
+                    <th scope="col">Nombre</th>
+                    <th scope="col">Apellido</th>
+                    <th scope="col">DNI</th>
+                    <th scope="col">Edad</th>
+                    <th scope="col">Correo</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let administrador of administradoresPag">
+                    <td><img class="fotoTabla" [src]="administrador.imagen1"></td>
+                    <td>{{administrador.nombre}}</td>
+                    <td>{{administrador.apellido}}</td>
+                    <td>{{administrador.dni}}</td>
+                    <td>{{administrador.edad}}</td>
+                    <td>{{administrador.correo}}</td>
+                </tr>
+
+            </tbody>
+        </table>
+
+        <div *ngIf="administradores" class="d-flex justify-content-between p-2">
+            <ngb-pagination [collectionSize]="administradores.length" [(page)]="pageAdministradores" [pageSize]="pageSize"
+                (pageChange)="refreshAdministradores()">
+            </ngb-pagination>
+        </div>
+    </div>
+
+</div>

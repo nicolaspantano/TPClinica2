@@ -52,6 +52,17 @@ export class AuthService {
     });
   }
 
+  RegistrarAdministrador(admin: Usuario) {
+    console.log('aaaa',admin);
+    return new Promise<any>((resolve, rejected) => {
+      this.Register(admin.correo, admin.password).then((response) => {
+        this.firestore.collection('usuarios').doc(response.user.uid).set({ ...admin });
+        resolve(response);
+      }), (error: any) => {
+        rejected(error);
+      }
+    });
+  }
 
 
   Login(correo,password){
@@ -59,8 +70,9 @@ export class AuthService {
       this.afAuth.signInWithEmailAndPassword(correo,password).then((response)=>{
         this.firestore.collection('usuarios').doc(response.user.uid).valueChanges().subscribe((res)=>{
           this.user=res;
+          resolve(response);
         })
-        resolve(response);
+        
       }, (error: any) => {
         switch (error.code) {
           case "auth/user-not-found":
@@ -82,6 +94,7 @@ export class AuthService {
 
   Logout(){
     this.afAuth.signOut();
+    this.user=null;
   }
 
   RegistrarEspecialista(especialista:Especialista){

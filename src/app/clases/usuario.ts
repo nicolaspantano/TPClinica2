@@ -6,4 +6,5 @@ export class Usuario {
     edad;
     dni;
     tipo;
+    imagen1;
 }

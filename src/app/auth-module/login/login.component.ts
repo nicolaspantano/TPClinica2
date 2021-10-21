@@ -37,7 +37,7 @@ export class LoginComponent implements OnInit {
   enviarForm(){
     
     this.authSvc.Login(this.form.value.email,this.form.value.password).then((res)=>{
-      setTimeout(() => {
+      console.log(this.authSvc.user);
         if(this.authSvc.user.tipo=='paciente'&&this.authSvc.user.emailVerified==false){
             Swal.fire({
               title:'No puede iniciar sesion',
@@ -69,116 +69,30 @@ export class LoginComponent implements OnInit {
             this.router.navigateByUrl('/');
           })
         }
-      },2000);
     })
   }
-    /*
-    this.authSvc.Login(this.form.value.email,this.form.value.password).then((response)=>{
-      this.userSvc.BuscarUnPaciente(response.user.uid).subscribe((paciente)=>{
-        if(paciente!=undefined){          
-          if(response.user.emailVerified==false){
-            Swal.fire({
-              title:'No puede iniciar sesion',
-              text:'Para iniciar sesion debe verificar su identidad con el email que le fue enviado',
-              icon:'error',
-              confirmButtonText:'Aceptar'
-            }).then(()=>{
-              this.authSvc.Logout();
-            })
-          }
-          else{
-            Swal.fire({
-              title:'Inicio de sesion correcto',
-              text:'Bienvenido a la Clinica OnLine',
-              icon:'success',
-              confirmButtonText:'Continuar'
-            }).then(()=>{
-              this.router.navigateByUrl('/');
-            })
-          }
-        }
-        else{
-         var observableEspecialista = this.userSvc.BuscarUnEspecialista(response.user.uid);
-         observableEspecialista.subscribe((especialista:Especialista)=>{
-            if(especialista!=undefined){
-              if(especialista.verificadoAdmin==false){
-                Swal.fire({
-                  title:'No puede iniciar sesion',
-                  text:'Para iniciar sesion un administrador debe verificar su identidad',
-                  icon:'error',
-                  confirmButtonText:'Aceptar'
-                }).then(()=>{
-                  this.authSvc.Logout();
-                  
-                })
-              }
-              else{
-                Swal.fire({
-                  title:'Inicio de sesion correcto',
-                  text:'Bienvenido a la Clinica OnLine',
-                  icon:'success',
-                  confirmButtonText:'Continuar'
-                }).then(()=>{
-                  this.router.navigateByUrl('/');
-                })
-              }
-            }
-          }).unsubscribe();
-        }
-      })/*
-      console.log(paciente);
-      if(paciente!=undefined){
-        if(response.user.emailVerified==false){
-          Swal.fire({
-            title:'No puede iniciar sesion',
-            text:'Para iniciar sesion debe verificar su identidad con el email que le fue enviado',
-            icon:'error',
-            confirmButtonText:'Aceptar'
-          }).then(()=>{
-            this.authSvc.Logout();
-          })
-        }
-        else{
-          Swal.fire({
-            title:'Inicio de sesion correcto',
-            text:'Bienvenido a la Clinica OnLine',
-            icon:'success',
-            confirmButtonText:'Continuar'
-          }).then(()=>{
-            this.router.navigateByUrl('/');
-          })
-        }
-      }
-      else{
-        var especialista = this.userSvc.BuscarUnEspecialista(response.user.uid);
-        console.log(response.user.uid)
-        console.log(especialista);
-
-        if(especialista!=undefined){
-          if(especialista.verificadoAdmin==false){
-            Swal.fire({
-              title:'No puede iniciar sesion',
-              text:'Para iniciar sesion un administrador debe verificar su identidad',
-              icon:'error',
-              confirmButtonText:'Aceptar'
-            }).then(()=>{
-              this.authSvc.Logout();
-            })
-          }
-          else{
-            Swal.fire({
-              title:'Inicio de sesion correcto',
-              text:'Bienvenido a la Clinica OnLine',
-              icon:'success',
-              confirmButtonText:'Continuar'
-            }).then(()=>{
-              this.router.navigateByUrl('/');
-            })
-          }
-        }
-      }
-      
-    })
-  }*/
+  onChangeHardcode(e){
+    console.log(e.target.value);
+    switch(e.target.value){
+      case 'paciente':
+        this.form.patchValue({
+          email:'nicolaspantano757@gmail.com',
+          password:'12341234'
+        })
+        break;
+      case 'especialista':
+        this.form.patchValue({
+          email:'nico_pantano_23@hotmail.com',
+          password:'12341234'
+        })
+        break;
+      case 'administrador':
+        this.form.patchValue({
+          email:'admin@gmail.com',
+          password:'12341234'
+        })
+        break;
+    }
+  }
 
 }
