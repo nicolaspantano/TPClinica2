@@ -232,11 +232,11 @@ export class RegistroComponent implements OnInit {
   }
 
   onChangeEspecialidad(e){
-    if(e.target.value=='nueva'){
-      this.formEspecialista.get('especialidad').reset();
-      this.nueva=true;
-      
-    }
+    console.log(e.target.value);
+    var arrEspec = new Array();
+    arrEspec = this.formEspecialista.value.especialidad
+    var a = document.getElementById('nuevaEspec').nodeValue;
+    console.log(a);
     
   }
 
