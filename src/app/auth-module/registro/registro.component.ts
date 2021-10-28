@@ -18,14 +18,15 @@ import { UsuariosService } from 'src/app/servicios/usuarios.service';
 export class RegistroComponent implements OnInit {
 
   admin = false;
-
+  numero1=0;
+  numero2=0;
   formPaciente:FormGroup;
   formEspecialista:FormGroup;
   formAdministrador:FormGroup;
 
   clasesEleccion = 'col-6';
 
-
+  nuevaEspec;
   foto1;
   foto2;
   especialidades;
@@ -35,6 +36,9 @@ export class RegistroComponent implements OnInit {
 
   constructor(private fb:FormBuilder,private storage:AngularFireStorage, private authSvc:AuthService, private router:Router, private especSvc:EspecialidadesService, private userSvc:UsuariosService, private _route: ActivatedRoute) {
     
+    this.numero1=Math.floor(Math.random() * (60 - 1)) + 1;
+    this.numero2=Math.floor(Math.random() * (60 - 1)) + 1;
+
     this._route.queryParams.subscribe(params => {
       console.log(params);
       if(params && params.admin=='true'){
@@ -52,7 +56,10 @@ export class RegistroComponent implements OnInit {
       email:['',[Validators.required,this.validarEmail]],
       password:['',[Validators.required]],
       imagen1:['',[Validators.required,this.validarImagen]],
-      imagen2:['',[Validators.required,this.validarImagen]]
+      imagen2:['',[Validators.required,this.validarImagen]],
+      captcha:['',[Validators.required]]
+
+      
 
     })
 
@@ -65,7 +72,11 @@ export class RegistroComponent implements OnInit {
       email:['',[Validators.required,this.validarEmail]],
       password:['',[Validators.required]],
       imagen1:['',[Validators.required,this.validarImagen]],
+      captcha:['',[Validators.required]],
+      nuevaEspec:['']
+
     })
+    this.formEspecialista.get('nuevaEspec').disable();
 
     if(this.admin){
       this.clasesEleccion='col-4';
@@ -77,6 +88,8 @@ export class RegistroComponent implements OnInit {
         email:['',[Validators.required,this.validarEmail]],
         password:['',[Validators.required]],
         imagen1:['',[Validators.required,this.validarImagen]],
+        captcha:['',[Validators.required]]
+
       })
     }
     
@@ -85,14 +98,36 @@ export class RegistroComponent implements OnInit {
       console.log(this.especialidades)
     })
     
+    
+
+
 
    }
 
   ngOnInit(): void {
   }
-
+  validarCaptcha(form){
+    console.log('this',this)
+    if(form.value.captcha!=(this.numero1+this.numero2)){
+      console.log('da false');
+      return false
+    }
+    return true;
+  }
 
   enviarFormPaciente(){
+
+    if(this.validarCaptcha(this.formPaciente)==false){
+      Swal.fire({
+        title:'Ups!!',
+        text: 'Captcha incorrecto. Intente de nuevo',
+        confirmButtonText: 'Volver a intentar',
+        icon:'error'
+      })
+    }
+    else{
+
+    
     var paciente = new Paciente();
     paciente.nombre = this.formPaciente.value.nombre;
     paciente.apellido = this.formPaciente.value.apellido;
@@ -117,7 +152,7 @@ export class RegistroComponent implements OnInit {
     }), (e:any)=>{
       alert(e);
     }
-
+  }
   }
 
   validarEmail(control:AbstractControl){
@@ -172,6 +207,15 @@ export class RegistroComponent implements OnInit {
 
 
   enviarFormAdministrador(){
+    if(this.validarCaptcha(this.formAdministrador)==false){
+      Swal.fire({
+        title:'Ups!!',
+        text: 'Captcha incorrecto. Intente de nuevo',
+        confirmButtonText: 'Volver a intentar',
+        icon:'error'
+      })
+    }
+    else{
     var administrador = new Usuario();
     administrador.nombre = this.formAdministrador.value.nombre;
     administrador.apellido = this.formAdministrador.value.apellido;
@@ -196,16 +240,35 @@ export class RegistroComponent implements OnInit {
       alert(e);
     }
 
-    console.log(this.formAdministrador.value);
+  }
   }
 
   enviarFormEspecialista(){
+    if(this.validarCaptcha(this.formEspecialista)==false){
+      Swal.fire({
+        title:'Ups!!',
+        text: 'Captcha incorrecto. Intente de nuevo',
+        confirmButtonText: 'Volver a intentar',
+        icon:'error'
+      })
+    }
+    else{
+
+
+    var arr = new Array();
+    arr = this.formEspecialista.value.especialidad;
+    var i = arr.indexOf('nueva');
+    if(i!=-1){
+      arr.splice(i,1);
+      arr.push(this.formEspecialista.value.nuevaEspec); 
+      this.especSvc.AgregarUna({nombre : this.formEspecialista.value.nuevaEspec})
+    }
     var especialista = new Especialista();
     especialista.nombre = this.formEspecialista.value.nombre;
     especialista.apellido = this.formEspecialista.value.apellido;
     especialista.edad = this.formEspecialista.value.edad;
     especialista.dni = this.formEspecialista.value.dni;
-    especialista.especialidad = this.formEspecialista.value.especialidad;
+    especialista.especialidad = arr;
     especialista.correo = this.formEspecialista.value.email;
     especialista.password = this.formEspecialista.value.password;
     especialista.imagen1 = 1;
@@ -230,13 +293,17 @@ export class RegistroComponent implements OnInit {
       alert(e);
     }
   }
+  }
 
   onChangeEspecialidad(e){
-    console.log(e.target.value);
-    var arrEspec = new Array();
-    arrEspec = this.formEspecialista.value.especialidad
-    
-    
+    var arr = new Array();
+    arr = this.formEspecialista.value.especialidad;
+    console.log(arr);
+    if(arr.indexOf('nueva')!=-1){
+      this.formEspecialista.get('nuevaEspec').enable();
+    }else{
+      this.formEspecialista.get('nuevaEspec').disable();
+    }
     
   }
 

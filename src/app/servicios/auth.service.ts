@@ -17,9 +17,6 @@ export class AuthService {
     this.observableUser = new BehaviorSubject<any>(this.user);
    }
 
-   eventChange() {
-    this.observableUser.next(this.user);
-    }
 
   Register(email: string, password: string) {
 
@@ -81,7 +78,7 @@ export class AuthService {
         this.userFire=response.user;
         this.firestore.collection('usuarios').doc(response.user.uid).valueChanges().subscribe((res)=>{
           this.user=res;
-          this.eventChange();
+
           
           resolve(response);
         })
@@ -109,7 +106,6 @@ export class AuthService {
     this.afAuth.signOut();
     this.user=null;
     this.userFire=null;
-    this.eventChange();
     localStorage.clear();
   }
   

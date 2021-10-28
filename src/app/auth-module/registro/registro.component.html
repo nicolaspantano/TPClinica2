@@ -144,7 +144,19 @@
                 Formato de archivo incorrecto</div>
         </div>
     </div>
-    <button type="submit" class="btn btn-primary" [disabled]="formPaciente.invalid">Confirmar</button>
+
+    <div>
+        <p><label for="inputCaptcha" class="form-label">Captcha</label></p>
+        <span>{{numero1}} + {{numero2}} = </span>
+        <input type="number" formControlName="captcha"
+            id="inputCaptcha" aria-describedby="captchaHelp">
+        
+            <button type="submit" class="btn btn-primary" style="margin-left: 20px;" [disabled]="formPaciente.invalid">Confirmar</button>
+    </div>
+    <div id="imagen2Help" style="color:red" class="form-text"
+            *ngIf="formPaciente.get('captcha')?.hasError('required') && formPaciente.get('captcha')?.touched">El captcha es requerido</div>
+    
+    
 
 
 </form>
@@ -245,7 +257,7 @@
         <!--Nueva especialidad-->
         <div class="mb-3 col-6">
             <label for="inputEspecialidad"  class="form-label">Nueva especialidad</label>
-            <input type="text" id="nuevaEspec" class="form-control" [disabled]=!nueva>
+            <input [disabled]=!nueva formControlName="nuevaEspec" type="text" id="nuevaEspec" class="form-control" >
         </div>
 
 
@@ -282,8 +294,16 @@
         </div>
 
     </div>
-    <button type="submit" class="btn btn-primary" [disabled]="formEspecialista.invalid">Confirmar</button>
-
+    <div>
+        <p><label for="inputCaptcha" class="form-label">Captcha</label></p>
+        <span>{{numero1}} + {{numero2}} = </span>
+        <input type="number" formControlName="captcha"
+            id="inputCaptcha" aria-describedby="captchaHelp">
+        
+            <button type="submit" class="btn btn-primary" style="margin-left: 20px;" [disabled]="formEspecialista.invalid">Confirmar</button>
+    </div>
+    <div id="imagen2Help" style="color:red" class="form-text"
+            *ngIf="formEspecialista.get('captcha')?.hasError('required') && formEspecialista.get('captcha')?.touched">El captcha es requerido</div>
 
 </form>
 
@@ -399,7 +419,16 @@
         </div>
 
     </div>
-    <button type="submit" class="btn btn-primary" [disabled]="formAdministrador.invalid">Confirmar</button>
+    <div>
+        <p><label for="inputCaptcha" class="form-label">Captcha</label></p>
+        <span>{{numero1}} + {{numero2}} = </span>
+        <input type="number" formControlName="captcha"
+            id="inputCaptcha" aria-describedby="captchaHelp">
+        
+            <button type="submit" class="btn btn-primary" style="margin-left: 20px;" [disabled]="formAdministrador.invalid">Confirmar</button>
+    </div>
+    <div id="imagen2Help" style="color:red" class="form-text"
+            *ngIf="formAdministrador.get('captcha')?.hasError('required') && formAdministrador.get('captcha')?.touched">El captcha es requerido</div>
 
 
 </form>
