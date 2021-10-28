@@ -4,13 +4,22 @@ import { AngularFirestore } from '@angular/fire/compat/firestore';
 import { AngularFireAuth } from "@angular/fire/compat/auth";
 import { Paciente } from '../clases/paciente';
 import { Especialista } from '../clases/especialista';
+import { BehaviorSubject } from 'rxjs';
 @Injectable({
   providedIn: 'root'
 })
 export class AuthService {
 
   user;
-  constructor(private afAuth: AngularFireAuth, private firestore: AngularFirestore) { }
+  userFire;
+  observableUser;
+  constructor(private afAuth: AngularFireAuth, private firestore: AngularFirestore) {
+    this.observableUser = new BehaviorSubject<any>(this.user);
+   }
+
+   eventChange() {
+    this.observableUser.next(this.user);
+    }
 
   Register(email: string, password: string) {
 
@@ -65,11 +74,15 @@ export class AuthService {
   }
 
 
+
   Login(correo,password){
     return new Promise<any>((resolve,rejected)=>{
       this.afAuth.signInWithEmailAndPassword(correo,password).then((response)=>{
+        this.userFire=response.user;
         this.firestore.collection('usuarios').doc(response.user.uid).valueChanges().subscribe((res)=>{
           this.user=res;
+          this.eventChange();
+          
           resolve(response);
         })
         
@@ -95,11 +108,17 @@ export class AuthService {
   Logout(){
     this.afAuth.signOut();
     this.user=null;
+    this.userFire=null;
+    this.eventChange();
+    localStorage.clear();
   }
+  
 
   RegistrarEspecialista(especialista:Especialista){
+    
     return new Promise<any>((resolve,rejected)=>{
       this.Register(especialista.correo,especialista.password).then((response)=>{
+        response.user.sendEmailVerification();
         this.firestore.collection('usuarios').doc(response.user.uid).set({ ...especialista });
         resolve(response);
       }), (error:any)=>{

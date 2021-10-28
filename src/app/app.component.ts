@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
+import { Observable, of, Subscription } from 'rxjs';
 import Swal from 'sweetalert2';
 import { AuthService } from './servicios/auth.service';
 
@@ -10,8 +11,12 @@ import { AuthService } from './servicios/auth.service';
 })
 export class AppComponent {
   title = 'TPClinica2';
+  usuario = null;
+  constructor(public authSvc:AuthService,private router:Router){
+    
+  }
 
-  constructor(public authSvc:AuthService,private router:Router){}
+
 
   Logout(){
     Swal.fire({

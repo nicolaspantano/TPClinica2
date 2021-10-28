@@ -220,7 +220,7 @@ export class RegistroComponent implements OnInit {
       this.subirFotos(response.user.uid);
       Swal.fire({
         title:'Registro exitoso!!',
-        text:'Un administrador debe validar su usuario para que pueda ingresar',
+        text:'Un administrador debe validar su usuario para que pueda ingresar, ademas de validar su identidad con su correo electronico.',
         icon:'success',
         confirmButtonText:'Volver al inicio'
       }).then(()=>{
@@ -235,8 +235,8 @@ export class RegistroComponent implements OnInit {
     console.log(e.target.value);
     var arrEspec = new Array();
     arrEspec = this.formEspecialista.value.especialidad
-    var a = document.getElementById('nuevaEspec').nodeValue;
-    console.log(a);
+    
+    
     
   }
 

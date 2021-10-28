@@ -8,12 +8,12 @@
       <li *ngIf="authSvc.user.tipo=='administrador'"><a routerLink="/admin/usuarios" class="nav-link px-2 link-dark">Usuarios</a></li>
     </ul>
 
-    <div *ngIf="!authSvc.user" class="col-md-3 text-end">
+    <div *ngIf="!usuario" class="col-md-3 text-end">
       <button type="button" class="btn btn-outline-primary me-2" routerLink="/login">Iniciar Sesion</button>
       <button type="button" class="btn btn-primary" routerLink="/registrarse">Registrarse</button>
     </div>
-    <div *ngIf="authSvc.user" class="col-md-3 text-end">
-      <button type="button" class="btn btn-primary" (click)="Logout()">Registrarse</button>
+    <div *ngIf="usuario" class="col-md-3 text-end">
+      <button type="button" class="btn btn-primary" (click)="Logout()">Cerrar sesion</button>
     </div>
   </header>
   <div class="mx-auto my-auto">

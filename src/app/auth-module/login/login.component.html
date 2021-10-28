@@ -1,41 +1,38 @@
-<form [formGroup]="form" (ngSubmit)="enviarForm()">
-    <div class="mb-3">
-        <label for="exampleInputEmail1" class="form-label">Email</label>
-        <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp"
-            formControlName="email">
-        <div id="emailHelp" style="color:red" class="form-text"
-            *ngIf="form.get('email')?.hasError('required') && form.get('email')?.touched">El email
-            es
-            requerido</div>
-        <div id="emailHelp" style="color:red" class="form-text"
-            *ngIf="form.get('email')?.hasError('faltaArroba') && form.get('email')?.touched">Email
-            invalido</div>
+<div class="row">
+    <div class="col-3">
+        <p *ngFor='let u of hardcode'>
+            <button class="btn-primary btn text-center" (click)="setearHardcode(u)" style="height:100px; width: 100px;">
+                <img [src]="u.imagen" style="max-width: 60px; max-height: 60px;">
+            </button>
+        </p>
     </div>
-
-    <!--Password-->
-
-    <div class="mb-3">
-        <label for="inputPassword" class="form-label">Contraseña</label>
-        <input type="password" class="form-control" id="inputPassword" aria-describedby="passwordHelp"
-            formControlName="password">
-        <div id="passwordHelp" style="color:red" class="form-text"
-            *ngIf="form.get('password')?.hasError('required') && form.get('password')?.touched">La
-            contraseña es requerida</div>
-    </div>
-
-    <div class="row">
-        <div class="col-4">
+    <div class="col-9">
+        <form [formGroup]="form" (ngSubmit)="enviarForm()">
+            <div class="mb-3">
+                <label for="exampleInputEmail1" class="form-label">Email</label>
+                <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp"
+                    formControlName="email">
+                <div id="emailHelp" style="color:red" class="form-text"
+                    *ngIf="form.get('email')?.hasError('required') && form.get('email')?.touched">El email
+                    es
+                    requerido</div>
+                <div id="emailHelp" style="color:red" class="form-text"
+                    *ngIf="form.get('email')?.hasError('faltaArroba') && form.get('email')?.touched">Email
+                    invalido</div>
+            </div>
+        
+            <!--Password-->
+        
+            <div class="mb-3">
+                <label for="inputPassword" class="form-label">Contraseña</label>
+                <input type="password" class="form-control" id="inputPassword" aria-describedby="passwordHelp"
+                    formControlName="password">
+                <div id="passwordHelp" style="color:red" class="form-text"
+                    *ngIf="form.get('password')?.hasError('required') && form.get('password')?.touched">La
+                    contraseña es requerida</div>
+            </div>
+            
             <button type="submit" class="btn btn-primary" [disabled]="form.invalid">Confirmar</button>
-        </div>
-        <div class="col-8">
-            <select class="form-control" (change)="onChangeHardcode($event)">
-                <option style="display:none" selected>Hardcodear un usuario</option>
-                <option value="paciente">Paciente</option>
-                <option value="especialista">Especialista</option>
-                <option value="administrador">Administrador</option>
-
-            </select>
-        </div>
+        </form>
     </div>
-    
-</form>
+</div>

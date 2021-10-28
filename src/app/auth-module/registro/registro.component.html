@@ -1,16 +1,17 @@
-<div class="row text-center" *ngIf="tipoRegistro==''">
+<div class="text-center" *ngIf="tipoRegistro==''">
     <h2>¿Que tipo de usuario desea registrar?</h2>
-    <div [ngClass]="clasesEleccion" (click)="tipoRegistro='paciente'">
+    <div  (click)="tipoRegistro='paciente'" class="btnRectangular">
         <p><img src="../../../assets/paciente.png" style="max-width:400px;"></p>
         <h3>Paciente</h3>
 
     </div>
-    <div [ngClass]="clasesEleccion" (click)="tipoRegistro='especialista'">
+    <br>
+    <div  (click)="tipoRegistro='especialista'" class="btnRectangular">
         <p><img src="../../../assets/especialista.png" style="max-width:400px;"></p>
         <h3>Especialista</h3>
     </div>
-
-    <div *ngIf="admin" [ngClass]="clasesEleccion" (click)="tipoRegistro='administrador'">
+    <br>
+    <div *ngIf="admin"  (click)="tipoRegistro='administrador'" class="btnRectangular">
         <p><img src="../../../assets/administrador.png" style="max-width:400px;"></p>
         <h3>Administrador</h3>
     </div>

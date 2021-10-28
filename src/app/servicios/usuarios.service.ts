@@ -53,4 +53,8 @@ export class UsuariosService {
     }
     
   }
+
+  TraerHardcore(){
+    return this.firestore.collection('hardcode').valueChanges();
+  }
 }
